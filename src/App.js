@@ -1,3 +1,5 @@
+import React from 'react';
+import Stock from './Stock'
 import './App.css';
 
 function App() {
@@ -22,6 +24,9 @@ function App() {
                     <div className={'w-1/2'}>
                         <h1 className={'text-3xl'}>BHP - BHP Group Limited</h1>
                     </div>
+                    <div className="App">
+                      <Stock></Stock>
+                      </div>
 
                     <div className={'w-1/2 flex justify-center'}>
 
@@ -64,6 +69,7 @@ function App() {
                     <div className={'col-span-3 p-2 bg-gray-400 text-center font-semibold'}>
                         Sell button
                     </div>
+
 
 
                 </div>
