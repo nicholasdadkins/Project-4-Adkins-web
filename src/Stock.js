@@ -1,4 +1,5 @@
 import React from 'react';
+import Plot from 'react-plotly.js';
 
 class Stock extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Stock extends React.Component {
   fetchStock() {
     const pointerToThis = this;
     console.log(pointerToThis);
-    const API_KEY = 'HGJWFG4N8AQ66ICD';
+    const API_KEY = 'V3OPTO5IPVSXMZ3Z';
     let StockSymbol = 'FB';
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
     let stockChartXValuesFunction = [];
@@ -50,7 +51,18 @@ class Stock extends React.Component {
     return (
       <div>
         <h1>Stock Market</h1>
-        
+        <Plot
+          data={[
+            {
+              x: this.state.stockChartXValues,
+              y: this.state.stockChartYValues,
+              type: 'scatter',
+              mode: 'lines+markers',
+              marker: {color: 'red'},
+            }
+          ]}
+          layout={{width: 720, height: 440, title: 'A Fancy Plot'}}
+        />
       </div>
     )
   }
