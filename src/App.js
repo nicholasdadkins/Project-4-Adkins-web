@@ -23,10 +23,9 @@ function App() {
                 <div className={'flex p-4'}>
                     <div className={'w-1/2'}>
                         <h1 className={'text-3xl'}>BHP - BHP Group Limited</h1>
-                    </div>
-                    <div className="App">
-                      <Stock></Stock>
-                      </div>
+                    </div >
+                   
+                    
 
                     <div className={'w-1/2 flex justify-center'}>
 
@@ -34,13 +33,14 @@ function App() {
                         <button className={'bg-red-600 text-white text-xl font-semibold py-3 px-4 w-32 rounded'}>Sell</button>
 
                     </div>
+
                 </div>
 
-
-
-
-
-
+                <div className={'flex p-4 w-1/2'}>
+                    <div className="App">
+                      <Stock></Stock>
+                      </div>
+                    </div>
 
 
 
