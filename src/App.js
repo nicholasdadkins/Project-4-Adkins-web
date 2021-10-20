@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from 'react';
 // import {Line} from 'react-chartjs-2';
-// import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, ReferenceArea,
-//     ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
-//     Label, LabelList } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, ReferenceArea,
+    ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
+    Label, LabelList } from 'recharts';
 
 // 1. Get the look and feel of the Stock name and BUY and SELL buttons going
 // 2. Work on the Table UI
@@ -14,7 +13,7 @@ import {useEffect, useState} from 'react';
 // 1. Add database to the backend server
 // 2. Add api router to the backend server
 // 3. Define the models in the system
-// 4. Test out the API in a REST            client like postman
+// 4. Test out the API in a REST client like postman
 
 // Next Session
 
@@ -73,14 +72,15 @@ function App() {
 
 
     const searchStock = async () => {
+
         console.log('searching for the stock')
         console.log(searchTerm);
         let res = await fetch(`${apiUrl}/api/v1/search/${searchTerm}`);
         let json = await res.json();
         console.log(json);
+    
         setActiveSearch(json.data);
 
-        // http://localhost:3000/api/v1/search/AAPL/historical
         let data = [];
         res = await fetch(`${apiUrl}/api/v1/search/${searchTerm}/historical`);
         json = await res.json();
@@ -92,6 +92,7 @@ function App() {
 
         console.log(data)
         setHistoricalData(data);
+        fetchWallet();
 
     };
 
@@ -108,10 +109,14 @@ function App() {
     }, [])
 
     const buyStock = async () => {
+       
+        
         console.log('buy the stock!')
         let cashRequired = buyQuantity * activeSearch.price;
+        
         console.log(cashRequired)
-        if(cashRequired <= wallet){
+        
+        if(cashRequired < parseFloat(wallet).toFixed(2)){
             let res = await fetch(`${apiUrl}/api/v1/portfolio`, {
                 method: 'POST',
                 headers: {
@@ -133,7 +138,7 @@ function App() {
             setActiveSearch(null)
 
         } else {
-            alert('Not enough cash to cover the transaction.');
+            alert('Not enough cash to cover the transaction. -> '.concat(cashRequired));
         }
 
 
@@ -176,8 +181,10 @@ function App() {
         { date: 'Thu', price: 96.45 },
         { date: 'Fri', price: 96.96 },
     ]
+    //fetchWallet();
 
   return (
+     
     <>
       <div className={'grid grid-cols-12'}>
           <div className={'col-span-12 border p-3'}>
@@ -189,9 +196,6 @@ function App() {
 
               <div className={'grid grid-cols-12'}>
                   <div className={'col-span-12 md:col-span-6 mb-4'}>
-
-
-
 
                       {/*<Line data={data} />*/}
 
@@ -243,7 +247,7 @@ function App() {
                       {/*</LineChart>*/}
 
                       {/*Try to cleanup the chart and make it look leaner*/}
-                      {/* {historicalData && <LineChart
+                      {historicalData && <LineChart
                           width={800} height={400} data={historicalData}
                           margin={{ top: 40, right: 40, bottom: 20, left: 20 }}
                       >
@@ -266,7 +270,7 @@ function App() {
                                   <Area dataKey="price" stroke="#ff7300" fill="#ff7300" dot={false} />
                               </AreaChart>
                           </Brush>
-                      </LineChart>} */}
+                      </LineChart>}
 
 
 
@@ -307,5 +311,4 @@ function App() {
 }
 
 export default App;
-
 
